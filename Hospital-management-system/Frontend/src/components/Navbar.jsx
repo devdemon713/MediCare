@@ -31,12 +31,20 @@ function Navbar() {
           <Link to="/contact">Contact</Link>
 
           {!token ? (
-            <Link
-              to="/login"
-              className="bg-white text-green-700 px-4 py-2 rounded-lg"
-            >
-              Login
-            </Link>
+            <>
+              <Link
+                to="/login"
+                className="bg-white text-green-700 px-4 py-2 rounded-lg"
+              >
+                Login
+              </Link>
+              <Link
+                to="/register"
+                className="border border-white px-4 py-2 rounded-lg"
+              >
+                Register
+              </Link>
+            </>
           ) : (
             <>
               <button
@@ -73,13 +81,22 @@ function Navbar() {
           <Link to="/contact" onClick={() => setOpen(false)}>Contact</Link>
 
           {!token ? (
-            <Link
-              to="/login"
-              className="block bg-green-600 text-white text-center py-2 rounded"
-              onClick={() => setOpen(false)}
-            >
-              Login
-            </Link>
+            <>
+              <Link
+                to="/login"
+                className="block bg-green-600 text-white text-center py-2 rounded"
+                onClick={() => setOpen(false)}
+              >
+                Login
+              </Link>
+              <Link
+                to="/register"
+                className="block border border-green-600 text-green-700 text-center py-2 rounded"
+                onClick={() => setOpen(false)}
+              >
+                Register
+              </Link>
+            </>
           ) : (
             <>
               <button

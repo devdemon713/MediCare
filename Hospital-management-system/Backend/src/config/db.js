@@ -2,10 +2,14 @@ import mongoose from "mongoose";
 
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect(process.env.MONGO_URI);
+    const mongoUri =
+      process.env.MONGO_URI ||
+      "mongodb://localhost:27017/hospital-management-system";
+
+    const conn = await mongoose.connect(mongoUri);
     console.log("MongoDB Connected:", conn.connection.host);
   } catch (error) {
-    console.error("MongoDB connection failed");
+    console.error("MongoDB connection failed:", error.message);
     process.exit(1);
   }
 };
