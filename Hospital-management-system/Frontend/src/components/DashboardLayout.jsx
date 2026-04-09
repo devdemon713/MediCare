@@ -1,18 +1,33 @@
+import { motion } from "framer-motion";
+
 function DashboardLayout({ title, children }) {
   return (
-    <div className="min-h-screen flex bg-gray-100">
-      {/* Sidebar */}
-      <aside className="w-64 bg-gradient-to-b from-blue-600 to-blue-800 text-white p-6">
-        <h2 className="text-2xl font-bold mb-6">HMS</h2>
-        <p className="text-sm opacity-80">Hospital Management</p>
-      </aside>
+    <div className="min-h-screen flex bg-[#030712] text-slate-200 selection:bg-emerald-500/30">
+      
+      
 
-      {/* Main content */}
-      <main className="flex-1 p-8">
-        <h1 className="text-3xl font-semibold mb-6">{title}</h1>
+      {/* --- MAIN INTERFACE --- */}
+      <main className="flex-1 flex flex-col min-w-0 overflow-hidden">
+        
+        {/* TOP HEADER */}
+       
 
-        <div className="bg-white rounded-xl shadow-md p-6 animate-fadeIn">
-          {children}
+        {/* SCROLLABLE CONTENT AREA */}
+        <div className="flex-1 mt-20 overflow-y-auto p-6 md:p-10 scrollbar-hide">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+            className="max-w-7xl mx-auto"
+          >
+            {/* The white card container is now replaced with a transparent "Stage" */}
+            <section className="relative  overflow-hidden rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md p-8 min-h-[400px]">
+              {/* Background Glow Effect */}
+             
+              
+              {children}
+            </section>
+          </motion.div>
         </div>
       </main>
     </div>
