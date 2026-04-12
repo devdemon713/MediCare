@@ -1,15 +1,21 @@
 import { TestBed } from '@angular/core/testing';
 import { RouterModule } from '@angular/router';
 import { App } from './app';
+import { NavbarComponent } from './shared/components/navbar/navbar.component';
+import { FooterComponent } from './shared/components/footer/footer.component';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('App', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        RouterModule.forRoot([])
+        RouterModule.forRoot([]),
+        HttpClientModule,
       ],
       declarations: [
-        App
+        App,
+        NavbarComponent,
+        FooterComponent,
       ],
     }).compileComponents();
   });
@@ -20,10 +26,10 @@ describe('App', () => {
     expect(app).toBeTruthy();
   });
 
-  it('should render title', async () => {
+  it('should have a router-outlet', () => {
     const fixture = TestBed.createComponent(App);
-    await fixture.whenStable();
+    fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, medicare-angular');
+    expect(compiled.querySelector('router-outlet')).toBeTruthy();
   });
 });
