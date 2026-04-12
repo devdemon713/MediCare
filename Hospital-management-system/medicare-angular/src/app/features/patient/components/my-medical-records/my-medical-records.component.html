@@ -1,0 +1,81 @@
+<div class="space-y-10">
+  <!-- Header -->
+  <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 border-b border-white/5 pb-8">
+    <div>
+      <h3 class="text-4xl font-black text-white tracking-tight">Health Vault</h3>
+      <p class="text-teal-400 text-[10px] font-black uppercase tracking-[0.2em] italic">✦ Verified Clinical History</p>
+    </div>
+    <div class="flex items-center gap-2 text-slate-500">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+      </svg>
+      <span class="text-[10px] font-black uppercase tracking-widest">End-to-End Encrypted</span>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="flex flex-col items-center justify-center py-20">
+    <div class="w-10 h-10 border-2 border-teal-500 border-t-transparent rounded-full animate-spin mb-4"></div>
+    <p class="text-slate-500 text-[10px] font-black uppercase tracking-widest">Decrypting Vault...</p>
+  </div>
+
+  <!-- Error -->
+  <div *ngIf="!loading && error"
+       class="p-8 bg-red-500/10 border border-red-500/20 rounded-[2rem] text-center">
+    <p class="text-red-400 font-black uppercase text-xs tracking-widest">{{ error }}</p>
+  </div>
+
+  <!-- Empty -->
+  <div *ngIf="!loading && !error && records.length === 0"
+       class="text-center py-24 bg-white/5 rounded-[2.5rem] border border-dashed border-white/10">
+    <p class="text-slate-600 font-bold uppercase tracking-widest text-xs">No medical documentation found</p>
+  </div>
+
+  <!-- Records -->
+  <div *ngIf="!loading && !error && records.length > 0" class="grid grid-cols-1 gap-8">
+    <div *ngFor="let r of records"
+         class="group relative bg-white/5 border border-white/10 rounded-[2.5rem] overflow-hidden backdrop-blur-md flex flex-col md:flex-row hover:border-teal-500/30 transition-all">
+      <!-- Date Sidebar -->
+      <div class="w-full md:w-48 bg-teal-500/5 border-b md:border-b-0 md:border-r border-white/5 p-8 flex flex-col justify-center items-center text-center">
+        <span class="text-teal-500 text-[10px] font-black uppercase tracking-widest mb-1 opacity-60">Verified Date</span>
+        <span class="text-white font-black text-2xl tracking-tighter">{{ formatDate(r.createdAt) }}</span>
+        <span class="text-slate-500 text-xs font-bold mt-1">{{ getYear(r.createdAt) }}</span>
+      </div>
+
+      <!-- Content -->
+      <div class="flex-1 p-8 md:p-10">
+        <div class="flex flex-wrap justify-between items-start gap-4 mb-8">
+          <div>
+            <span class="text-teal-500 text-[9px] font-black uppercase tracking-widest block mb-1">Attending Physician</span>
+            <h4 class="text-white font-black text-xl tracking-tight">Dr. {{ r.doctorId?.userId?.name || 'Unassigned' }}</h4>
+          </div>
+          <div class="bg-slate-900/80 px-4 py-2 rounded-xl border border-white/5">
+            <span class="text-[9px] text-slate-500 font-black uppercase block mb-1">Diagnosis</span>
+            <span class="text-teal-400 text-sm font-bold">{{ r.diagnosis }}</span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div class="space-y-2">
+            <h5 class="text-[10px] font-black text-white uppercase tracking-[0.2em] flex items-center gap-2">
+              <span class="w-1.5 h-1.5 rounded-full bg-teal-500 inline-block"></span>
+              Prescription
+            </h5>
+            <div class="bg-white/5 rounded-2xl p-4 border border-white/5 text-slate-300 text-sm italic">
+              "{{ r.prescription }}"
+            </div>
+          </div>
+          <div class="space-y-2">
+            <h5 class="text-[10px] font-black text-white uppercase tracking-[0.2em] flex items-center gap-2">
+              <span class="w-1.5 h-1.5 rounded-full bg-slate-600 inline-block"></span>
+              Physician Notes
+            </h5>
+            <p class="text-slate-400 text-sm leading-relaxed px-1">
+              {{ r.notes || 'No additional observations recorded.' }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

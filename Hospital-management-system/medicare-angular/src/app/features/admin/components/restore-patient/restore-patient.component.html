@@ -1,0 +1,50 @@
+<div class="space-y-8">
+  <div class="flex justify-between items-end">
+    <div>
+      <h3 class="text-3xl font-black text-white tracking-tight">System Archives</h3>
+      <p class="text-purple-400 text-[10px] font-black uppercase tracking-[0.2em] italic">✦ Deactivated Patient Registry</p>
+    </div>
+    <span class="hidden md:block px-4 py-1.5 rounded-full border border-purple-500/30 bg-purple-500/10 text-purple-400 text-[10px] font-black uppercase">
+      Security Level: Admin
+    </span>
+  </div>
+
+  <div *ngIf="loading" class="flex justify-center py-20">
+    <div class="w-10 h-10 border-4 border-purple-500/20 border-t-purple-500 rounded-full animate-spin"></div>
+  </div>
+
+  <div *ngIf="!loading && patients.length === 0"
+       class="text-center py-24 bg-white/5 rounded-[2.5rem] border border-dashed border-white/10">
+    <p class="text-slate-500 font-bold uppercase tracking-widest text-sm">Archives are currently empty</p>
+  </div>
+
+  <div *ngIf="!loading && patients.length > 0"
+       class="overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-2xl">
+    <table class="w-full text-left border-collapse">
+      <thead class="bg-purple-500/10 border-b border-white/10">
+        <tr>
+          <th class="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest">Patient Details</th>
+          <th class="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest">Contact Info</th>
+          <th class="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-right">Action</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-white/5">
+        <tr *ngFor="let p of patients" class="hover:bg-purple-500/5 transition-colors group">
+          <td class="px-6 py-5">
+            <div class="text-white font-bold">{{ p.userId?.name }}</div>
+            <div class="text-[10px] text-purple-400 font-mono">ARCHIVE_ID: {{ p._id?.slice(-6)?.toUpperCase() }}</div>
+          </td>
+          <td class="px-6 py-5">
+            <div class="text-slate-300 text-sm">{{ p.userId?.email }}</div>
+          </td>
+          <td class="px-6 py-5 text-right">
+            <button (click)="restore(p._id)"
+                    class="px-5 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-[10px] font-black uppercase tracking-widest shadow-lg transition-all">
+              Restore Record
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

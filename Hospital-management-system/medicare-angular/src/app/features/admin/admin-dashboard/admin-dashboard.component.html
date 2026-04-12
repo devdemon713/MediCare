@@ -1,0 +1,28 @@
+<app-dashboard-layout title="Admin Portal">
+  <!-- Background Orbs -->
+  <div class="fixed inset-0 overflow-hidden pointer-events-none -z-10 bg-[#0a0f1d]">
+    <div class="absolute -top-20 -left-20 w-96 h-96 bg-blue-600/15 blur-[100px] rounded-full"></div>
+    <div class="absolute bottom-0 right-0 w-[500px] h-[500px] bg-emerald-500/10 blur-[120px] rounded-full"></div>
+  </div>
+
+  <div class="space-y-6 relative z-10">
+    <!-- Nav Grid -->
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 bg-slate-900/40 p-1.5 rounded-[2rem] border border-white/5 backdrop-blur-md gap-1">
+      <button *ngFor="let item of menuItems"
+              (click)="view = item.id"
+              [class]="'py-3 px-2 text-[10px] md:text-xs font-bold uppercase tracking-tighter md:tracking-wider rounded-2xl transition-all duration-300 ' + (view === item.id ? 'bg-blue-600 text-white shadow-[0_0_15px_rgba(37,99,235,0.4)]' : 'text-slate-500 hover:text-slate-300 hover:bg-white/5')">
+        {{ item.label }}
+      </button>
+    </div>
+
+    <!-- Content Area -->
+    <div class="bg-white/5 backdrop-blur-2xl border border-white/10 p-6 md:p-8 rounded-[2.5rem] shadow-2xl min-h-[60vh]">
+      <app-view-doctors     *ngIf="view === 'viewDoctors'"></app-view-doctors>
+      <app-create-doctor    *ngIf="view === 'createDoctor'"></app-create-doctor>
+      <app-add-patient      *ngIf="view === 'addPatient'"></app-add-patient>
+      <app-view-patients    *ngIf="view === 'viewPatients'"></app-view-patients>
+      <app-restore-patient  *ngIf="view === 'restorePatients'"></app-restore-patient>
+      <app-restore-doctors  *ngIf="view === 'restoreDoctors'"></app-restore-doctors>
+    </div>
+  </div>
+</app-dashboard-layout>

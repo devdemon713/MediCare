@@ -1,0 +1,86 @@
+<nav [class]="'fixed top-0 z-50 w-full px-4 transition-all duration-500 ' + (scrolled ? 'py-4' : 'py-8')">
+  <div [class]="'max-w-7xl mx-auto px-6 py-3 flex justify-between items-center rounded-[2.5rem] border transition-all duration-500 ' + (scrolled ? 'bg-white/40 backdrop-blur-2xl border-white/40 shadow-[0_20px_50px_rgba(0,0,0,0.1)]' : 'bg-blue-600/5 backdrop-blur-md border-white/20')">
+
+    <!-- Logo -->
+    <a routerLink="/" class="flex items-center gap-3 group">
+      <div class="relative">
+        <div class="absolute inset-0 bg-blue-400 blur-xl rounded-full opacity-30"></div>
+        <div class="relative z-10 w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center">
+          <span class="text-white font-black text-lg">B</span>
+        </div>
+      </div>
+      <span [class]="'text-2xl font-black tracking-tighter transition-colors duration-300 ' + (scrolled ? 'text-slate-800' : 'text-white')">
+        Better<span class="text-blue-500 group-hover:text-blue-400 transition-colors">Life</span>
+      </span>
+    </a>
+
+    <!-- Desktop Menu -->
+    <div class="hidden md:flex gap-1 items-center">
+      <a *ngFor="let item of navLinks"
+         [routerLink]="item.path"
+         routerLinkActive="text-blue-500"
+         [class]="'px-5 py-2 rounded-full text-sm font-bold transition-all hover:bg-blue-500/10 ' + (scrolled ? 'text-slate-600 hover:text-blue-600' : 'text-white/80 hover:text-white')">
+        {{ item.label }}
+      </a>
+
+      <div class="w-[1px] h-6 bg-slate-400/20 mx-4"></div>
+
+      <ng-container *ngIf="!authService.isLoggedIn(); else loggedIn">
+        <a routerLink="/login"
+           [class]="'px-6 py-2.5 rounded-2xl text-sm font-bold transition-all border ' + (scrolled ? 'bg-slate-900 text-white border-transparent shadow-lg' : 'bg-white/10 text-white border-white/20 backdrop-blur-md')">
+          Sign In
+        </a>
+      </ng-container>
+
+      <ng-template #loggedIn>
+        <div class="flex items-center gap-3">
+          <button (click)="goToDashboard()"
+                  class="flex items-center gap-2 bg-slate-900/90 hover:bg-black text-white px-6 py-2.5 rounded-2xl font-bold backdrop-blur-xl transition-all border border-white/10">
+            <span class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></span>
+            Dashboard
+          </button>
+          <button (click)="handleLogout()"
+                  class="px-4 py-2.5 rounded-2xl text-sm font-bold transition-all text-slate-500 border border-transparent hover:border-red-500/20 hover:text-red-400">
+            Logout
+          </button>
+        </div>
+      </ng-template>
+    </div>
+
+    <!-- Mobile Toggle -->
+    <button class="md:hidden w-11 h-11 flex flex-col items-center justify-center gap-1.5 rounded-xl border bg-white/10 border-white/20"
+            (click)="open = !open">
+      <span [class]="'w-6 h-0.5 rounded-full transition-all ' + (scrolled ? 'bg-slate-800' : 'bg-white')"></span>
+      <span [class]="'w-6 h-0.5 rounded-full transition-all ' + (scrolled ? 'bg-slate-800' : 'bg-white') + (open ? ' opacity-0' : '')"></span>
+      <span [class]="'w-6 h-0.5 rounded-full transition-all ' + (scrolled ? 'bg-slate-800' : 'bg-white')"></span>
+    </button>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div *ngIf="open"
+       class="absolute top-28 left-4 right-4 md:hidden rounded-[2.5rem] bg-white/70 backdrop-blur-3xl border border-white/50 p-8 shadow-2xl">
+    <div class="flex flex-col gap-4">
+      <a *ngFor="let item of navLinks"
+         [routerLink]="item.path"
+         (click)="open = false"
+         class="text-2xl font-black text-slate-800 hover:text-blue-600 transition-colors block">
+        {{ item.label }}
+      </a>
+
+      <div class="h-[1px] bg-slate-200/50 my-2"></div>
+
+      <ng-container *ngIf="!authService.isLoggedIn(); else mobileLoggedIn">
+        <a routerLink="/login" (click)="open = false"
+           class="flex items-center justify-center w-full py-4 bg-blue-600 text-white rounded-2xl font-bold shadow-lg">
+          Get Started
+        </a>
+      </ng-container>
+      <ng-template #mobileLoggedIn>
+        <button (click)="handleLogout()"
+                class="w-full py-4 bg-red-50 text-red-600 rounded-2xl font-bold border border-red-100">
+          Logout Account
+        </button>
+      </ng-template>
+    </div>
+  </div>
+</nav>

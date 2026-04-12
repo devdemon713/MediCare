@@ -1,0 +1,57 @@
+<div class="bg-[#0a0f1d] min-h-screen flex flex-col overflow-x-hidden">
+
+  <!-- Background -->
+  <div class="fixed inset-0 pointer-events-none -z-10">
+    <div class="absolute top-0 right-0 w-96 h-96 bg-blue-600/10 blur-[120px] rounded-full"></div>
+    <div class="absolute bottom-0 left-0 w-[500px] h-[500px] bg-emerald-500/5 blur-[120px] rounded-full"></div>
+  </div>
+
+  <!-- Header -->
+  <section class="relative pt-32 pb-16 px-6">
+    <div class="max-w-7xl mx-auto text-center relative z-10">
+      <div class="inline-block px-4 py-1.5 mb-6 rounded-full border border-blue-500/30 bg-blue-500/10 backdrop-blur-md">
+        <span class="text-blue-400 text-sm font-bold tracking-widest uppercase">✦ Professional Solutions</span>
+      </div>
+      <h1 class="text-5xl md:text-6xl font-black mb-6 text-white tracking-tight">
+        Our <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-emerald-400">Services</span>
+      </h1>
+      <p class="text-lg md:text-xl max-w-2xl mx-auto text-slate-400 leading-relaxed">
+        BetterLife provides a complete digital ecosystem for managing hospital operations
+        with enterprise-grade security and intuitive workflows.
+      </p>
+    </div>
+  </section>
+
+  <!-- Services Grid -->
+  <section class="w-full max-w-7xl mx-auto px-6 py-12 flex-shrink-0">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div *ngFor="let s of services"
+           [class]="'group p-8 rounded-3xl bg-white/5 border border-white/10 ' + s.border + ' transition-all duration-500 hover:-translate-y-2 backdrop-blur-sm shadow-xl'">
+        <div [class]="'w-14 h-14 ' + s.bg + ' rounded-2xl flex items-center justify-center mb-6 ' + s.color + ' group-hover:scale-110 transition-transform duration-500'">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" [attr.d]="s.icon"/>
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold mb-4 text-white group-hover:text-blue-400 transition-colors">{{ s.title }}</h3>
+        <p class="text-slate-400 leading-relaxed text-sm">{{ s.desc }}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="relative py-20 px-6 mt-auto">
+    <div class="max-w-5xl mx-auto">
+      <div class="p-10 md:p-16 rounded-[3rem] bg-gradient-to-br from-blue-600/20 to-blue-900/40 backdrop-blur-md shadow-2xl relative overflow-hidden text-center border border-white/10">
+        <h2 class="text-3xl md:text-4xl font-black mb-6 text-white">Experience the Future Today</h2>
+        <p class="text-blue-100/70 mb-10 text-lg max-w-2xl mx-auto font-medium">
+          Ready to streamline your medical facility? Join our growing network of digital-first hospitals.
+        </p>
+        <a routerLink="/contact"
+           class="inline-block bg-blue-600 text-white px-10 py-4 rounded-2xl font-bold text-lg hover:bg-blue-500 transition-all hover:scale-105 shadow-[0_0_20px_rgba(37,99,235,0.4)]">
+          Contact Sales Team
+        </a>
+      </div>
+    </div>
+  </section>
+
+</div>

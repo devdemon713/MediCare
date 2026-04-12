@@ -1,0 +1,76 @@
+<div class="min-h-screen flex items-center justify-center bg-[#0a0f1d] relative overflow-hidden px-4">
+
+  <!-- Background -->
+  <div class="absolute inset-0 overflow-hidden pointer-events-none">
+    <div class="absolute -top-[10%] -left-[10%] w-[40%] h-[40%] bg-blue-600/20 blur-[120px] rounded-full"></div>
+    <div class="absolute -bottom-[10%] -right-[10%] w-[50%] h-[50%] bg-emerald-500/10 blur-[120px] rounded-full"></div>
+  </div>
+
+  <!-- Login Card -->
+  <div class="relative z-10 w-full max-w-md">
+    <div class="bg-white/5 md:mt-16 backdrop-blur-2xl border border-white/10 px-8 py-5 md:p-10 rounded-[2.5rem] shadow-2xl">
+
+      <div class="text-center mb-8">
+        <h2 class="text-3xl font-black text-white tracking-tight">Welcome Back</h2>
+        <p class="text-slate-400 mt-2">Access the <span class="text-blue-400">BetterLife</span> portal</p>
+      </div>
+
+      <form (ngSubmit)="handleSubmit()" class="space-y-5">
+
+        <!-- Role Switcher -->
+        <div class="flex bg-slate-900/50 p-1 rounded-2xl border border-white/5 gap-1">
+          <button *ngFor="let r of roles"
+                  type="button"
+                  (click)="role = r"
+                  [class]="'flex-1 py-2 text-xs font-bold uppercase tracking-wider rounded-xl transition-all duration-300 ' + (role === r ? 'bg-blue-600 text-white shadow-lg' : 'text-slate-500 hover:text-slate-300')">
+            {{ r }}
+          </button>
+        </div>
+
+        <!-- Email -->
+        <div class="space-y-1.5">
+          <label class="text-xs font-bold text-slate-500 ml-1 uppercase">Email Address</label>
+          <input type="email"
+                 [(ngModel)]="email"
+                 name="email"
+                 placeholder="name@hospital.com"
+                 required
+                 class="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all" />
+        </div>
+
+        <!-- Password -->
+        <div class="space-y-1.5">
+          <label class="text-xs font-bold text-slate-500 ml-1 uppercase">Password</label>
+          <input type="password"
+                 [(ngModel)]="password"
+                 name="password"
+                 placeholder="••••••••"
+                 required
+                 class="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all" />
+        </div>
+
+        <!-- Submit -->
+        <button type="submit"
+                [disabled]="isLoading"
+                class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 rounded-2xl transition-all flex items-center justify-center gap-2 disabled:opacity-50">
+          <ng-container *ngIf="isLoading; else signInLabel">
+            <div class="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+          </ng-container>
+          <ng-template #signInLabel>Sign In to Dashboard</ng-template>
+        </button>
+      </form>
+
+      <!-- Error -->
+      <div *ngIf="error"
+           class="mt-6 p-4 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm text-center font-medium">
+        {{ error }}
+      </div>
+
+      <div class="mt-8 text-center">
+        <a routerLink="/" class="text-slate-500 hover:text-blue-400 text-sm transition-colors font-medium">
+          ← Back to homepage
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,40 @@
+<div class="relative min-h-[70vh] flex items-center justify-center py-8 px-4">
+  <div class="w-full max-w-lg p-8 md:p-10 rounded-[2.5rem] bg-white/5 border border-white/10 backdrop-blur-2xl shadow-2xl">
+
+    <div class="text-center mb-8">
+      <div class="inline-block p-3 rounded-2xl bg-emerald-500/10 text-emerald-400 mb-4">
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+        </svg>
+      </div>
+      <h2 class="text-3xl font-black text-white tracking-tight">Register Patient</h2>
+      <p class="text-slate-400 mt-2 text-sm uppercase tracking-widest font-bold italic opacity-70">✦ New Entry Protocol</p>
+    </div>
+
+    <form (ngSubmit)="handleSubmit()" class="space-y-4">
+      <input placeholder="Full Name" [class]="inputStyles"
+             [(ngModel)]="name" name="name" required />
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <input type="email" placeholder="Email Address" [class]="inputStyles"
+               [(ngModel)]="email" name="email" required />
+        <input type="password" placeholder="Access Password" [class]="inputStyles"
+               [(ngModel)]="password" name="password" required />
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <input type="number" placeholder="Age" [class]="inputStyles"
+               [(ngModel)]="age" name="age" required />
+        <input placeholder="Gender" [class]="inputStyles"
+               [(ngModel)]="gender" name="gender" required />
+      </div>
+      <button type="submit"
+              class="w-full bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-blue-500 text-white font-black py-4 rounded-2xl transition-all duration-300 uppercase tracking-widest shadow-lg mt-4">
+        Finalize Registration
+      </button>
+    </form>
+
+    <div *ngIf="message"
+         [class]="'mt-6 p-4 rounded-2xl text-sm text-center font-bold border ' + (status === 'success' ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400' : 'bg-red-500/10 border-red-500/20 text-red-400')">
+      {{ message }}
+    </div>
+  </div>
+</div>

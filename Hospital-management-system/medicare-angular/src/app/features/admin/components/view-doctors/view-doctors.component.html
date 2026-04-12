@@ -1,0 +1,64 @@
+<div class="space-y-6">
+  <!-- Header & Filter -->
+  <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+    <h3 class="text-2xl font-black text-white tracking-tight">Staff Registry</h3>
+    <div class="flex w-full md:w-auto gap-2">
+      <input type="text" placeholder="Search Registry..."
+             [(ngModel)]="search" (ngModelChange)="onSearch()"
+             class="flex-grow bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500/50" />
+      <div class="flex bg-slate-900/50 p-1 rounded-xl border border-white/5">
+        <button *ngFor="let v of ['table','cards']"
+                (click)="viewMode = v"
+                [class]="'px-3 py-1.5 rounded-lg text-[10px] font-black uppercase transition-all ' + (viewMode === v ? 'bg-blue-600 text-white shadow-lg' : 'text-slate-500')">
+          {{ v }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="flex flex-col items-center justify-center py-20">
+    <div class="w-8 h-8 border-2 border-blue-600 border-t-transparent rounded-full animate-spin mb-4"></div>
+    <p class="text-slate-500 text-xs font-bold uppercase tracking-widest">Accessing Secure Records...</p>
+  </div>
+
+  <!-- Table View -->
+  <div *ngIf="!loading && viewMode === 'table'" class="overflow-x-auto rounded-2xl border border-white/10">
+    <table class="w-full text-left">
+      <thead class="bg-white/5 border-b border-white/10">
+        <tr>
+          <th class="px-6 py-4 text-[10px] font-black text-slate-500 uppercase">Name</th>
+          <th class="px-6 py-4 text-[10px] font-black text-slate-500 uppercase">Specialization</th>
+          <th class="px-6 py-4 text-[10px] font-black text-slate-500 uppercase text-right">Action</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-white/5">
+        <tr *ngFor="let d of filteredDoctors" class="hover:bg-white/5 transition-colors">
+          <td class="px-6 py-4 text-white font-bold">{{ d.userId?.name }}</td>
+          <td class="px-6 py-4">
+            <span class="text-blue-400 text-xs font-bold px-2 py-1 rounded-lg bg-blue-500/10">{{ d.specialization }}</span>
+          </td>
+          <td class="px-6 py-4 text-right">
+            <button (click)="deactivate(d.userId._id)"
+                    class="text-red-500 text-[10px] font-black uppercase hover:text-red-400">
+              Deactivate
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Cards View -->
+  <div *ngIf="!loading && viewMode === 'cards'" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <div *ngFor="let d of filteredDoctors"
+         class="bg-white/5 border border-white/10 p-5 rounded-[2rem] hover:border-blue-500/40 transition-all group">
+      <h4 class="text-white font-black text-lg mb-1">{{ d.userId?.name }}</h4>
+      <p class="text-blue-400 text-[10px] font-black uppercase tracking-widest mb-4">{{ d.specialization }}</p>
+      <button (click)="deactivate(d.userId._id)"
+              class="w-full py-2.5 rounded-xl bg-red-500/10 text-red-500 text-[10px] font-black uppercase tracking-widest hover:bg-red-500 hover:text-white transition-all">
+        Deactivate
+      </button>
+    </div>
+  </div>
+</div>

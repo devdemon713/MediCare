@@ -1,0 +1,50 @@
+<app-dashboard-layout title="Clinical Operations">
+  <div class="space-y-8">
+
+    <!-- Welcome Header -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="md:col-span-2 p-8 rounded-[2.5rem] bg-gradient-to-br from-indigo-600 to-blue-700 text-white shadow-2xl relative overflow-hidden">
+        <div class="relative z-10">
+          <h2 class="text-3xl font-black tracking-tight">Welcome back, Specialist</h2>
+          <p class="text-indigo-100 text-sm mt-2 opacity-80 font-medium italic">
+            You have active consultations waiting in the queue.
+          </p>
+        </div>
+        <div class="absolute right-[-10%] top-[-20%] w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
+      </div>
+
+      <div class="p-8 rounded-[2.5rem] bg-white/5 border border-white/10 backdrop-blur-md flex flex-col justify-center">
+        <span class="text-indigo-400 text-[10px] font-black uppercase tracking-[0.2em] mb-1">Status</span>
+        <div class="flex items-center gap-2">
+          <div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
+          <span class="text-white font-bold text-xl tracking-tight">On Duty</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab Navigation -->
+    <div class="flex items-center gap-2 p-1.5 bg-white/5 border border-white/10 rounded-[2rem] w-fit backdrop-blur-xl">
+      <button *ngFor="let tab of tabs"
+              (click)="view = tab.id"
+              [class]="'relative px-6 py-3 rounded-[1.5rem] text-[10px] font-black uppercase tracking-widest transition-all duration-300 ' + (view === tab.id ? 'bg-indigo-600 text-white shadow-lg' : 'text-slate-500 hover:text-slate-300')">
+        <span class="flex items-center gap-2">
+          <span class="text-sm">{{ tab.icon }}</span>
+          {{ tab.label }}
+        </span>
+      </button>
+    </div>
+
+    <!-- View Renderer -->
+    <div class="min-h-[400px]">
+      <app-my-doctor-appointments *ngIf="view === 'appointments'"></app-my-doctor-appointments>
+
+      <div *ngIf="view !== 'appointments'"
+           class="py-20 text-center bg-white/5 rounded-[2.5rem] border border-dashed border-white/10">
+        <p class="text-slate-600 font-bold uppercase tracking-widest text-xs italic">
+          Module "{{ view }}" is currently initializing...
+        </p>
+      </div>
+    </div>
+
+  </div>
+</app-dashboard-layout>
